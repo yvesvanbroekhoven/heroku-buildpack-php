@@ -351,7 +351,7 @@ if [ -z "$FRAMEWORK" ]; then
     FRAMEWORK="$basedir/../frameworks/default"
 fi
 
-# Try to load the framework from the "frameworks" directory if it's just a 
+# Try to load the framework from the "frameworks" directory if it's just a
 # simple framework name like "symfony2"
 if [ ! -f "$FRAMEWORK" ] && [ -f "$basedir/../frameworks/$FRAMEWORK" ]; then
     FRAMEWORK="$basedir/../frameworks/$FRAMEWORK"
@@ -386,6 +386,31 @@ mv /app/vendor/libmcrypt vendor/libmcrypt
 mv /app/vendor/libicu vendor/libicu
 mv /app/vendor/nginx vendor/nginx
 mv /app/vendor/php vendor/php
+
+
+# Initialize environment if not set
+if [ -z "$WP_ENV" ]; then
+    WP_ENV=production
+fi
+
+
+# Move Wordpress environment config to wp-config.php
+#
+# Naming convention:
+# wp-config-ENVIRONMENT.php
+#
+# Example if WP_ENV is 'staging':
+# wp-config-staging.php
+#
+cd $BUILD_DIR
+if [ -f "$BUILD_DIR/app/wp-config-$WP_ENV.php" ]; then
+    echo "-----> Copy wp-config-$WP_ENV.php to wp-config.php"
+    cp -f "$BUILD_DIR/app/wp-config-$WP_ENV.php" "$BUILD_DIR/app/wp-config.php"
+else
+    echo "[ERROR] Can't find $BUILD_DIR/app/wp-config-$WP_ENV.php"
+    exit 1
+fi
+
 
 mkdir -p "bin"
 
