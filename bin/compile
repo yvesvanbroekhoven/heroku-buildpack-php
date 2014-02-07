@@ -403,11 +403,13 @@ fi
 # wp-config-staging.php
 #
 cd $BUILD_DIR
+
+echo $BUILD_DIR
 if [ -f "$BUILD_DIR/app/wp-config-$WP_ENV.php" ]; then
     echo "-----> Copy wp-config-$WP_ENV.php to wp-config.php"
-    cp -f "/app/wp-config-$WP_ENV.php" "/app/wp-config.php"
+    cp -f "$BUILD_DIR/wp-config-$WP_ENV.php" "$BUILD_DIR/wp-config.php"
 else
-    echo "[ERROR] Can't find /app/wp-config-$WP_ENV.php"
+    echo "[ERROR] Can't find $BUILD_DIR/wp-config-$WP_ENV.php"
     exit 1
 fi
 
