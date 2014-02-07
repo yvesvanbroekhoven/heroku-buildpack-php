@@ -404,8 +404,9 @@ fi
 #
 cd $BUILD_DIR
 
-echo $BUILD_DIR
-if [ -f "$BUILD_DIR/app/wp-config-$WP_ENV.php" ]; then
+ls $BUILD_DIR
+
+if [ -f "$BUILD_DIR/wp-config-$WP_ENV.php" ]; then
     echo "-----> Copy wp-config-$WP_ENV.php to wp-config.php"
     cp -f "$BUILD_DIR/wp-config-$WP_ENV.php" "$BUILD_DIR/wp-config.php"
 else
